@@ -7,4 +7,14 @@
 # include <stdlib.h>
 # include "../minilibx_metal/mlx.h"
 
+
+typedef struct s_params
+{
+	void		*pointer;
+
+
+}				t_params;
+
+int		parsing(t_params params, char *map);
+
 #endif

@@ -2,11 +2,20 @@
 
 int main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-	void *ptr;
+	t_params	params;
+	(void) argv;
 
-	ptr = mlx_init();
-	mlx_new_window(ptr, 1000, 1000, "mywindow");
-	mlx_loop(ptr);
+	if (argc != 2)
+	{	
+		return (-1);
+		printf("ERROR:\nNot enough arguments.\n");
+	}
+	else
+	{
+		parsing(params, argv[1]);
+	}
+	
+	params.pointer = mlx_init();
+	mlx_new_window(params.pointer, 1000, 1000, "mywindow");
+	mlx_loop(params.pointer);
 }
