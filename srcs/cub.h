@@ -6,15 +6,19 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "../minilibx_metal/mlx.h"
-
+# include "../Libft/libft.h"
 
 typedef struct s_params
 {
 	void		*pointer;
+	char		*mapfile;
 
 
 }				t_params;
 
-int		parsing(t_params params, char *map);
+void			check_args(int arc, char **argv, t_params *params);
+char			*ft_strdup(const char *str);
+int				ft_strcmp(char *s1, char *s2);
+int				map_parsing(t_params *params);
 
 #endif

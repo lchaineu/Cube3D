@@ -1,8 +1,10 @@
 NAME			= cube_3d
 
 SRCS_LIST	   = \
-					main.c \
-					parsing.c 
+					cub.c \
+					parsing.c \
+					utils.c \
+					checks.c \
 
 SRCS			= $(addprefix ${FOLDER}/, ${SRCS_LIST})
 
@@ -10,13 +12,15 @@ OBJS			= ${SRCS:.c=.o}
 
 FOLDER		  = srcs
 
-MLX			 = minilibx_metal
+LIBFT			= Libft
+MLX			 	= minilibx_metal
 
 CC			  = gcc
 
-CFLAGS		  = -Wall -Wextra -Werror
+CFLAGS		  	= -Wall -Wextra -Werror
+LFLAGS			= -L Libft -lft
 
-METAL_MLX	   = libmlx.dylib -framework Metal -framework AppKit
+METAL_MLX	   	= libmlx.dylib -framework Metal -framework AppKit
 
 RM			  = rm -f
 
@@ -33,10 +37,13 @@ $(NAME):		$(OBJS)
 clean:
 				@$(RM) $(OBJS)
 				@make clean -C $(MLX)
+				@make clean -C $(LIBFT)
+
 
 fclean:		 clean
 				@$(RM) $(NAME)
 				@$(RM) libmlx.dylib
 				@$(RM) img.bmp
+				@make fclean -C $ (LIBFT)
 
 re:			 fclean all
