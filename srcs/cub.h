@@ -6,7 +6,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "../minilibx_metal/mlx.h"
-# include "../Libft/libft.h"
+# include "../Lib19/libft.h"
 
 typedef struct s_params
 {

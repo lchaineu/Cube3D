@@ -12,13 +12,13 @@ OBJS			= ${SRCS:.c=.o}
 
 FOLDER		  = srcs
 
-LIBFT			= Libft
+LIBFT			= Lib19
 MLX			 	= minilibx_metal
 
 CC			  = gcc
 
 CFLAGS		  	= -Wall -Wextra -Werror
-LFLAGS			= -L Libft -lft
+LFLAGS			= -L Lib19 -lft
 
 METAL_MLX	   	= libmlx.dylib -framework Metal -framework AppKit
 
@@ -29,6 +29,7 @@ all:			$(NAME)
 $(NAME):		$(OBJS)
 				@make -s -C $(MLX)
 				@mv $(MLX)/libmlx.dylib .
+				@make extra -s -C $(LIBFT)
 				@$(CC) $(CFLAGS) $(METAL_MLX) $(OBJS) -o $(NAME)
 
 %.o: %.c
@@ -46,4 +47,6 @@ fclean:		 clean
 				@$(RM) img.bmp
 				@make fclean -C $ (LIBFT)
 
-re:			 fclean all
+re:				fclean all
+
+.PHONY:			all fclean clean re
