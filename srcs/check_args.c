@@ -6,26 +6,29 @@ static	void	is_dotcub(char *str, t_params *params)
 
 	len = (int)ft_strlen(str);
 	if (len < 5)
-		ft_printf("File name incorrect\n");
+		errors("Not a valid filename", params);
 	if (str[len-4] != '.' || str[len-3] != 'c' || str[len-2] != 'u' || str[len-1] != 'b')
-		ft_printf("File name incorrect\n");
+		errors("Not a valid filename", params);
 	if (!(params->mapfile = ft_strdup(str)))
-		ft_printf("Error:malloc filename\n");
+		errors("Can't malloc filename", params);
 }
 
 static	void	is_save(char *str, t_params *params)
 {
 	(void)params;
 	if (!(ft_strcmp("--save", str)))
-		printf("second argument not a save argument\n");
+		ft_printf("second argument not a save argument\n");
+	else
+	{
+		params->save = 1;
+	}
 }
-
 
 void		check_args(int argc, char **argv, t_params *params)
 {	
 	(void)params;
 	if (argc == 1)
-		printf("Error: Too few arguments");
+		ft_printf("Error: Too few arguments\n");
 	if (argc == 2)
 		is_dotcub(argv[1], params);
 	if (argc == 3)
@@ -34,5 +37,5 @@ void		check_args(int argc, char **argv, t_params *params)
 		is_save(argv[2], params);
 	}
 	if (argc > 3)
-		printf("Error: Too many arguments");
+		ft_printf("Error: Too many arguments\n");
 }

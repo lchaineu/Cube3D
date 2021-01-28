@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlen.c                                           :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchaineu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lanachaineux <lanachaineux@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 09:35:23 by lchaineu          #+#    #+#             */
-/*   Updated: 2020/10/09 14:44:04 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/01/18 13:38:24 by lanachaineu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
-	size_t i;
+	int i;
 
 	i = 0;
 	while (s[i])

@@ -2,9 +2,11 @@ NAME			= cube_3d
 
 SRCS_LIST	   = \
 					cub.c \
-					parsing.c \
-					utils.c \
-					checks.c \
+					get_data.c \
+					cub_utils.c \
+					check_args.c \
+					get_map.c \
+					manage_errors.c \
 
 SRCS			= $(addprefix ${FOLDER}/, ${SRCS_LIST})
 
@@ -29,8 +31,8 @@ all:			$(NAME)
 $(NAME):		$(OBJS)
 				@make -s -C $(MLX)
 				@mv $(MLX)/libmlx.dylib .
-				@make extra -s -C $(LIBFT)
-				@$(CC) $(CFLAGS) $(METAL_MLX) $(OBJS) -o $(NAME)
+				@make bonus -s -C $(LIBFT)
+				@$(CC) $(CFLAGS) $(LFLAGS) $(METAL_MLX) $(OBJS) -o $(NAME)
 
 %.o: %.c
 				@$(CC) $(CFLAGS) -o $@ -c $<
@@ -45,7 +47,7 @@ fclean:		 clean
 				@$(RM) $(NAME)
 				@$(RM) libmlx.dylib
 				@$(RM) img.bmp
-				@make fclean -C $ (LIBFT)
+				@make fclean -C $(LIBFT)
 
 re:				fclean all
 
