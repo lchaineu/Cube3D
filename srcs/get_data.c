@@ -73,13 +73,8 @@ static void		get_resolution(t_params *params, char *str)
 	int i;
 
 	i = 1;
-	params->window.resolution.x_res = ft_atoi(str);
-	while(str[i] == '\f' || str[i] == '\t' || str[i] == '\n' ||
-			str[i] == '\r' || str[i] == '\v' || str[i] == ' ')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-		i++;
-	params->window.resolution.y_res = ft_atoi(str);
+	ft_atoi_cub(str, &i , &params->window.resolution.x_res);
+	ft_atoi_cub(str, &i , &params->window.resolution.y_res);
 }
 
 static void		get_north_texture(t_params *params, char *data)

@@ -1,6 +1,6 @@
 #include "cub.h"
 
-void		get_player_pos(t_pos *pos, t_map map)
+void		search_pos(t_map map, t_params *params)
 {	
 	int		x;
 	int		y;
@@ -12,8 +12,7 @@ void		get_player_pos(t_pos *pos, t_map map)
 		{
 			if (search_string(map.map[y][x], "NSEW"))
 			{
-				pos->x = x;
-				pos->y = y;
+				get_pos(params, x, y, map.map[y][x]);
 			}
 			x++;
 		}
@@ -71,5 +70,5 @@ void		malloc_map(t_params *params)
 		ft_printf("Error: can't malloc map\n");
 	params->map.map[i] = NULL;
 	save_map(&params->map, params->mapfile);
-	get_player_pos(&params->pos, params->map);
+	search_pos(params->map, params);
 }
