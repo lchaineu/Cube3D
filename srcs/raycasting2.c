@@ -43,13 +43,6 @@ void	get_texture_coordinate(t_params *params)
 	}
 }
 
-/*void	draw_buffer(t_params *params)
-{
-
-
-
-}*/
-
 void	get_wall_x(t_params *params)
 {
 	if (params->cam.compass == 0)
@@ -62,6 +55,30 @@ void	get_wall_x(t_params *params)
 		params->cam.wallX = params->pos.x + params->cam.walldist
 							*  params->cam.dir.raydirX;
 	}
-	params->cam.wallX = floor(params->cam.wallX);
+	params->cam.wallX -= floor(params->cam.wallX);
 	get_texture_coordinate(params);
+}
+
+void	draw(t_params *params)
+{
+	int	i;
+	int	pix_pos;
+
+	i = 0;
+	while (i < params->cam.draw_start)
+	{
+		pix_pos = params->cam.pix * params->image.bpp
+		/ 8 + params->image.size_line * i;
+		pix_color(params, pix_pos, params->window.ceiling);
+		i++;
+	}
+	draw_wall(params);
+	i = params->cam.draw_end;
+	while (i < params->window.resolution.y_res)
+	{
+		pix_pos = params->cam.pix * params->image.bpp
+		/ 8 + params->image.size_line * i;
+		pix_color(params, pix_pos, params->window.floor);
+		i++;
+	}
 }

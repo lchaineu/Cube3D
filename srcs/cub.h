@@ -49,11 +49,6 @@ typedef struct s_image
 	int				endian;
 }				t_image;
 
-typedef struct s_sprites
-{
-	t_texture		texture;
-
-}				t_sprites;
 typedef struct s_map
 {
 	char	**map;
@@ -75,10 +70,15 @@ typedef	struct s_textures
 	int			width;
 	int			height;
 	double		step;
-	int			textY;
+	double			textY;
 	t_image		img;
 }				t_textures;				
 
+typedef struct s_sprites
+{
+	t_textures		texture;
+
+}				t_sprites;
 
 typedef struct s_resolution
 {
@@ -109,6 +109,7 @@ typedef struct s_params
 	t_image		image;
 	t_cam		cam;
 	t_sprites	sprite;
+	t_color		color;
 }				t_params;
 
 int				set_cub(t_params *params);
@@ -127,11 +128,9 @@ void			create_cub(t_params *params);
 void			get_pos(t_params *params, int x, int y, char c);
 void			draw_mesures(t_params *params);
 void			get_wall_x(t_params *params);
-void			draw_buffer(t_params *params);
-
-
-
-
-
+void			draw(t_params *params);
+void			pix_color(t_params *params, int pix_pos, t_color color);
+void			draw_wall(t_params *params);
+void			raycasting(t_params *params);
 
 #endif

@@ -63,8 +63,8 @@ static void		check_textures(t_textures *textures)
 			ft_printf("Error: not a good path for texture\n");
 		i++;
 	}
-	if (textures->path[len-4] != '.' || textures->path[len-3] != 'p'
-			|| textures->path[len-2] != 'n' || textures->path[len-1] != 'g')
+	if (textures->path[len-4] != '.' || textures->path[len-3] != 'x'
+			|| textures->path[len-2] != 'p' || textures->path[len-1] != 'm')
 	ft_printf("Error: not a good path for texture\n");
 }
 
@@ -103,8 +103,8 @@ static void		get_east_texture(t_params *params, char *data)
 
 static void		get_sprite_texture(t_params *params, char *data)
 {
-	get_textures(&params->window.sprites, data);
-	check_textures(&params->window.sprites);
+	get_textures(&params->sprite.texture, data);
+	check_textures(&params->sprite.texture);
 }
 
 static void		get_floor_color(t_params *params, char *data)

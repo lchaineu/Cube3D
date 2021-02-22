@@ -73,3 +73,52 @@ int		is_empty_line(char *str)
 	}
 	return (1);
 }
+
+void	pix_color(t_params *params, int pix_pos, t_color color)
+{
+	params->image.info[pix_pos] = color.blue;
+	params->image.info[pix_pos + 1] = color.green;
+	params->image.info[pix_pos + 2] = color.red;
+}
+
+static	void	put_text_color(t_params *params, int pix_pos, t_textures *texture)
+{
+	int pixel_pos;
+	texture->textY += texture->step;
+	pixel_pos = texture->textX * texture->img.bpp
+	/ 8 + texture->img.size_line * (int)texture->textY;
+	params->image.info[pix_pos] =
+	texture->img.info[pixel_pos];
+	params->image.info[pix_pos + 1] =
+	texture->img.info[pixel_pos + 1];
+	params->image.info[pix_pos + 2] =
+	texture->img.info[pixel_pos + 2];
+}
+
+void	draw_wall(t_params *params)
+{
+	int	i;
+	int	pix_pos; 
+
+	i = params->cam.draw_start;
+	while (i < params->cam.draw_end)
+	{
+		pix_pos = params->cam.pix * params->image.bpp
+		/ 8 + params->image.size_line * i;
+		if (params->cam.compass == 0 && params->cam.dir.raydirX < 0)
+			put_text_color(params, pix_pos, &params->window.west);
+		else if (params->cam.compass == 0 && params->cam.dir.raydirX > 0)
+		{
+			put_text_color(params, pix_pos, &params->window.east);
+		}
+		else if (params->cam.compass == 1 && params->cam.dir.raydirY < 0)
+		{
+			put_text_color(params, pix_pos, &params->window.north);
+		}
+		else if (params->cam.compass == 1 && params->cam.dir.raydirY > 0)
+		{
+			put_text_color(params, pix_pos, &params->window.south);
+		}
+		i++;
+	}	
+}

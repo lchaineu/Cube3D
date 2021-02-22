@@ -10,16 +10,51 @@ void	set_cub_val(t_params *params)
 	params->sprite.texture.img.ptr = NULL;
 }
 
-void	get_textures(t_params *params
+void	init_textures(t_params *params)
 {
-	if (!(params->window.north.img.ptr = mlx_xpm_file_to_image()))
+	if (!(params->window.north.img.info = (unsigned char*)mlx_get_data_addr(
+	params->window.north.img.ptr, &params->window.north.img.bpp,
+	&params->window.north.img.size_line, &params->window.north.img.endian)))
+		errors("Can't get north texture info", params);
+	if (!(params->window.south.img.info = (unsigned char*)mlx_get_data_addr(
+	params->window.south.img.ptr, &params->window.south.img.bpp,
+	&params->window.south.img.size_line, &params->window.south.img.endian)))
+		errors("Can't get south texture info", params);
+	if (!(params->window.east.img.info = (unsigned char*)mlx_get_data_addr(
+	params->window.east.img.ptr, &params->window.east.img.bpp,
+	&params->window.east.img.size_line, &params->window.east.img.endian)))
+		errors("Can't get east texture info", params);
+	if (!(params->window.west.img.info = (unsigned char*)mlx_get_data_addr(
+	params->window.west.img.ptr, &params->window.west.img.bpp,
+	&params->window.west.img.size_line, &params->window.west.img.endian)))
+		errors("Can't get west texture info", params);
+}
 
-
+void	get_textures(t_params *params)
+{
+	if (!(params->window.north.img.ptr = 
+			mlx_xpm_file_to_image(params->ptr, params->window.north.path,
+			&params->window.north.width, &params->window.north.height)))
+		errors("Can't load north texture", params);
+	if (!(params->window.south.img.ptr = 
+			mlx_xpm_file_to_image(params->ptr, params->window.south.path,
+			&params->window.south.width, &params->window.south.height)))
+		errors("Can't load south texture", params);
+	if (!(params->window.east.img.ptr = 
+			mlx_xpm_file_to_image(params->ptr, params->window.east.path,
+			&params->window.east.width, &params->window.east.height)))
+		errors("Can't load east texture", params);
+	if (!(params->window.west.img.ptr = 
+			mlx_xpm_file_to_image(params->ptr, params->window.west.path,
+			&params->window.west.width, &params->window.west.height)))
+		errors("Can't load west texture", params);
+	init_textures(params);
 }
 
 void	create_cub(t_params *params)
 {
 	set_cub_val(params);
+	printf("[%s]", params->window.north.path);
 	if (!(params->window.ptr = mlx_new_window(params->ptr,
 			params->window.resolution.x_res, params->window.resolution.y_res, "Cub3D")))
 		errors("Can't create window", params);
@@ -28,6 +63,8 @@ void	create_cub(t_params *params)
 		errors("Can't create image", params);
 	if (!(params->image.info = (unsigned char *)mlx_get_data_addr(params->image.ptr, &params->image.bpp, &params->image.size_line, &params->image.endian)))
 		errors("Can't get image data", params);
+	get_textures(params);
+	raycasting(params);
 	mlx_loop(params->ptr);
 }
 
@@ -37,7 +74,7 @@ void	set_parsing_val(t_params *params)
 	params->window.south.path = NULL;
 	params->window.east.path = NULL;
 	params->window.west.path = NULL;
-	params->.sprites.texture.path = NULL;
+	params->sprite.texture.path = NULL;
 	params->map.map = NULL;
 	params->window.floor.blue = 0;
 	params->window.floor.green = 0;

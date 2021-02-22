@@ -90,7 +90,9 @@ void	raycasting(t_params *params)
 		get_hit_dist(params);
 		draw_mesures(params);
 		get_wall_x(params);
-		//draw_buffer(params);
+		draw(params);
 		params->cam.pix++;
 	}
+	mlx_put_image_to_window(params->ptr,
+	params->window.ptr, params->image.ptr, 0, 0);
 }
