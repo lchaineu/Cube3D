@@ -70,5 +70,7 @@ void		malloc_map(t_params *params)
 		ft_printf("Error: can't malloc map\n");
 	params->map.map[i] = NULL;
 	save_map(&params->map, params->mapfile);
+	if (!(is_a_good_map(params->map.map)))
+		errors("Map isn't closed", params);
 	search_pos(params->map, params);
 }

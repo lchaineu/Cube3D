@@ -5,6 +5,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include "../minilibx_metal/mlx.h"
 # include "../Lib19/libft.h"
 
@@ -86,6 +87,16 @@ typedef struct s_resolution
 	int			y_res;
 }				t_resolution;
 
+typedef struct		s_event
+{
+	int				w;
+	int				a;
+	int				s;
+	int				d;
+	int				right_arrow;
+	int				left_arrow;
+}					t_event;
+
 typedef struct s_window
 {
 	void			*ptr;
@@ -110,6 +121,7 @@ typedef struct s_params
 	t_cam		cam;
 	t_sprites	sprite;
 	t_color		color;
+	t_event		event;
 }				t_params;
 
 int				set_cub(t_params *params);
@@ -117,6 +129,7 @@ void			check_args(int arc, char **argv, t_params *params);
 char			*ft_strdup_cub(const char *str);
 int				ft_strcmp_cub(char *s1, char *s2);
 void			data_parsing(t_params *params);
+int				is_char_in_str(char *str, char c);
 int				ft_atoi_cub(char *str, int *i, int *rep);
 int				is_map_line(char *str);
 int				is_empty_line(char *str);
@@ -132,5 +145,9 @@ void			draw(t_params *params);
 void			pix_color(t_params *params, int pix_pos, t_color color);
 void			draw_wall(t_params *params);
 void			raycasting(t_params *params);
+int				is_a_good_map(char **map);
+void			event(t_params *params);
+
+
 
 #endif

@@ -11,6 +11,8 @@ SRCS_LIST	   = \
 					settings.c \
 					raycasting.c \
 					raycasting2.c \
+					get_moves.c \
+					move.c \
 
 
 SRCS			= $(addprefix ${FOLDER}/, ${SRCS_LIST})

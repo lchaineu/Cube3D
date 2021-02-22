@@ -1,5 +1,19 @@
 #include "cub.h"
 
+int		is_char_in_str(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (c == str[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int		ft_strcmp_cub(char *s1, char *s2)
 {
 	int i;
