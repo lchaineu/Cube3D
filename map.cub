@@ -1,6 +1,6 @@
 R 1080 768
 
-NO ./Textures/bluestone.xpm
+NO ./Textures/greystone.xpm
 SO ./Textures/greystone.xpm
 WE ./Textures/redbrick.xpm
 EA ./Textures/wood.xpm

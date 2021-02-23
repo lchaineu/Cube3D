@@ -54,7 +54,6 @@ void	get_textures(t_params *params)
 void	create_cub(t_params *params)
 {
 	set_cub_val(params);
-	printf("[%s]", params->window.north.path);
 	if (!(params->window.ptr = mlx_new_window(params->ptr,
 			params->window.resolution.x_res, params->window.resolution.y_res, "Cub3D")))
 		errors("Can't create window", params);
