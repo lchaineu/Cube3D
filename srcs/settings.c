@@ -65,7 +65,6 @@ void	create_cub(t_params *params)
 		errors("Can't get image data", params);
 	get_textures(params);
 	raycasting(params);
-	mlx_loop(params->ptr);
 }
 
 void	set_parsing_val(t_params *params)

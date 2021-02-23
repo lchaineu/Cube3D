@@ -8,6 +8,9 @@
 # include <unistd.h>
 # include "../minilibx_metal/mlx.h"
 # include "../Lib19/libft.h"
+# define SPEED 0.1
+# define ANGLE 0.1
+# define MAXDIST 0.2
 
 typedef struct s_vect
 {
@@ -147,6 +150,16 @@ void			draw_wall(t_params *params);
 void			raycasting(t_params *params);
 int				is_a_good_map(char **map);
 void			event(t_params *params);
+void			images_destroyer(t_params *params);
+void			do_exit(t_params *params);
+void			parsing_errors(char *error, t_params *params);
+void			move_forward(t_params *params);
+void			move_backward(t_params *params);
+void			move_left(t_params *params);
+void			move_right(t_params *params);
+void			point_left(t_params *params);
+void			point_right(t_params *params);
+
 
 
 

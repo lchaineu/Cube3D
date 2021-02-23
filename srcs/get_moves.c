@@ -10,10 +10,10 @@ int		associate_event(t_params *params)
 		move_right(params);
 	if (params->event.a)
 		move_left(params);
-	if (params->event.right_arrow)
-		rotation_right(params);
+	/*if (params->event.right_arrow)
+		point_right(params);
 	if (params->event.left_arrow)
-		rotation_left(params);
+		point_left(params);*/
 	return (1);
 }
 
@@ -36,17 +36,20 @@ int		press(int pressed_key, t_params *params)
 
 int		release(int pressed_key, t_params *params)
 {
-
+	if (pressed_key == 53 || pressed_key == 17)
+		do_exit(params);
+	return (1);
 }
 
 int		red_cross(t_params *params)
 {
-
-
+	do_exit(params);
+	return (1);
 }
 
 void	event(t_params *params)
 {
+	printf("coucou\n");
 	mlx_hook(params->window.ptr, 2, 0, press, params);
 	mlx_hook(params->window.ptr, 3, 0, release, params);
 	mlx_hook(params->window.ptr, 17, 0, red_cross, params);
