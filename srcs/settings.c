@@ -72,7 +72,7 @@ void	set_parsing_val(t_params *params)
 	params->window.south.path = NULL;
 	params->window.east.path = NULL;
 	params->window.west.path = NULL;
-	params->sprite.texture.path = NULL;
+	params->sprite.textures.path = NULL;
 	params->map.map = NULL;
 	params->window.floor.blue = 0;
 	params->window.floor.green = 0;

@@ -74,14 +74,28 @@ typedef	struct s_textures
 	int			width;
 	int			height;
 	double		step;
-	double			textY;
+	double		textY;
 	t_image		img;
 }				t_textures;				
 
 typedef struct s_sprites
 {
-	t_textures		texture;
-
+	t_vect		*tab;
+	int			*order;
+	double		*dist;
+	int			sprites_num;
+	t_vect		coords;
+	int			height;
+	int			width;
+	int			startX;
+	int			startY;
+	int			endX;
+	int			endY;
+	t_textures	textures;
+	int			stripe;
+	double		invDet;
+	t_vect		transform;
+	int			
 }				t_sprites;
 
 typedef struct s_resolution
