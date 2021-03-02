@@ -14,6 +14,8 @@ SRCS_LIST	   = \
 					get_moves.c \
 					move.c \
 					move2.c \
+					sprites.c \
+					sprites2.c \
 
 
 SRCS			= $(addprefix ${FOLDER}/, ${SRCS_LIST})

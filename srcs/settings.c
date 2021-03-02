@@ -7,7 +7,7 @@ void	set_cub_val(t_params *params)
 	params->window.south.img.ptr = NULL;
 	params->window.east.img.ptr = NULL;
 	params->window.west.img.ptr = NULL;
-	params->sprite.texture.img.ptr = NULL;
+	params->sprite.textures.img.ptr = NULL;
 }
 
 void	init_textures(t_params *params)

@@ -42,6 +42,7 @@ typedef struct s_cam
 	int		draw_start;
 	int		draw_end;
 	double	wallX;
+	double	*dist_buffer;
 }				t_cam;
 
 typedef struct s_image
@@ -87,15 +88,15 @@ typedef struct s_sprites
 	t_vect		coords;
 	int			height;
 	int			width;
+	int			stripe;
+	int			center_stripe;
 	int			startX;
 	int			startY;
 	int			endX;
 	int			endY;
 	t_textures	textures;
-	int			stripe;
 	double		invDet;
-	t_vect		transform;
-	int			
+	t_vect		transform;	
 }				t_sprites;
 
 typedef struct s_resolution
@@ -173,8 +174,9 @@ void			move_left(t_params *params);
 void			move_right(t_params *params);
 void			point_left(t_params *params);
 void			point_right(t_params *params);
-
-
+void			get_sprites_texture(t_params *params);
+void			put_sprites_text(t_params *params, int pix_pos, t_textures * text);
+void			sprites(t_params *params);
 
 
 #endif

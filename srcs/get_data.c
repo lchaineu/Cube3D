@@ -103,8 +103,8 @@ static void		get_east_texture(t_params *params, char *data)
 
 static void		get_sprite_texture(t_params *params, char *data)
 {
-	get_textures(&params->sprite.texture, data);
-	check_textures(&params->sprite.texture);
+	get_textures(&params->sprite.textures, data);
+	check_textures(&params->sprite.textures);
 }
 
 static void		get_floor_color(t_params *params, char *data)
