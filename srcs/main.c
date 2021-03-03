@@ -20,5 +20,7 @@ int		main(int argc, char **argv)
 	if (!(params.ptr = mlx_init()))
 		errors("fail to init mlx", &params);
 	create_cub(&params);
+	if (argc == 3)
+		save(&params);
 	event(&params);
 }
