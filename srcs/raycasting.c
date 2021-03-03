@@ -77,6 +77,7 @@ static void	get_hit_dist(t_params *params)
 		params->cam.walldist = (params->map.map_pos.y - params->pos.y +
 		(1 - (int)params->cam.step.y) / 2) / params->cam.dir.raydirY;
 	}
+	params->cam.dist_buffer[params->cam.pix] = params->cam.walldist;
 }
 
 void	raycasting(t_params *params)
@@ -93,6 +94,7 @@ void	raycasting(t_params *params)
 		draw(params);
 		params->cam.pix++;
 	}
+	sprites(params);
 	mlx_put_image_to_window(params->ptr,
 	params->window.ptr, params->image.ptr, 0, 0);
 }

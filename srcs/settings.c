@@ -28,6 +28,10 @@ void	init_textures(t_params *params)
 	params->window.west.img.ptr, &params->window.west.img.bpp,
 	&params->window.west.img.size_line, &params->window.west.img.endian)))
 		errors("Can't get west texture info", params);
+	if (!(params->sprite.textures.img.info = (unsigned char*)mlx_get_data_addr(
+	params->sprite.textures.img.ptr, &params->sprite.textures.img.bpp,
+	&params->sprite.textures.img.size_line, &params->sprite.textures.img.endian	)))
+		errors("Can't get sprites texture info", params);
 }
 
 void	get_textures(t_params *params)
@@ -48,6 +52,10 @@ void	get_textures(t_params *params)
 			mlx_xpm_file_to_image(params->ptr, params->window.west.path,
 			&params->window.west.width, &params->window.west.height)))
 		errors("Can't load west texture", params);
+	if (!(params->sprite.textures.img.ptr = 
+			mlx_xpm_file_to_image(params->ptr, params->sprite.textures.path,
+			&params->sprite.textures.width, &params->sprite.textures.height)))
+		errors("Can't load sprites texture", params);
 	init_textures(params);
 }
 
@@ -63,6 +71,7 @@ void	create_cub(t_params *params)
 	if (!(params->image.info = (unsigned char *)mlx_get_data_addr(params->image.ptr, &params->image.bpp, &params->image.size_line, &params->image.endian)))
 		errors("Can't get image data", params);
 	get_textures(params);
+	set_sprites(params);
 	raycasting(params);
 }
 
@@ -82,4 +91,5 @@ void	set_parsing_val(t_params *params)
 	params->window.ceiling.red = 0;
 	params->window.resolution.x_res = 0;
 	params->window.resolution.y_res = 0;
+	params->cam.dist_buffer = NULL;
 }

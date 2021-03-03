@@ -1,5 +1,12 @@
 #include "cub.h"
 
+int			is_space(char c)
+{
+	if (c == 32 || (9 <= c && c <= 13))
+		return (1);
+	return (0);
+}
+
 int		is_char_in_str(char *str, char c)
 {
 	int i;

@@ -73,8 +73,17 @@ static void		get_resolution(t_params *params, char *str)
 	int i;
 
 	i = 1;
+	params->window.res = 1;
+	while (str[i] && (!(str[i] >= '0' && str[i] <= '9')) && str[i] != '-')
+	{
+		if (!(is_space(str[i++])))
+			ft_printf("Resolution must only contain height and width");
+	}
 	ft_atoi_cub(str, &i , &params->window.resolution.x_res);
 	ft_atoi_cub(str, &i , &params->window.resolution.y_res);
+	if (!(params->cam.dist_buffer = malloc(sizeof(double) * 
+	params->window.resolution.x_res)))
+		ft_printf("Can't malloc distance buffer");
 }
 
 static void		get_north_texture(t_params *params, char *data)

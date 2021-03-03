@@ -43,6 +43,7 @@ typedef struct s_cam
 	int		draw_end;
 	double	wallX;
 	double	*dist_buffer;
+	int		side;
 }				t_cam;
 
 typedef struct s_image
@@ -125,6 +126,7 @@ typedef struct s_window
 	t_color			floor;
 	t_color			ceiling;
 	t_resolution	resolution;
+	int				res;
 }				t_window;
 
 typedef struct s_params
@@ -177,6 +179,9 @@ void			point_right(t_params *params);
 void			get_sprites_texture(t_params *params);
 void			put_sprites_text(t_params *params, int pix_pos, t_textures * text);
 void			sprites(t_params *params);
+void			set_sprites(t_params *params);
+int				is_space(char c);
+
 
 
 #endif
