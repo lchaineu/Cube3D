@@ -1,38 +1,38 @@
 # include "cub.h"
 
-int			get_color(t_color *color, char *str)
+int			get_color(t_params *params, char *str)
 {
 	int i;
 
 	i = 1;
-	if (!ft_atoi_cub(str, &i, &color->red))
-		ft_printf("Error: Missing color\n");
+	if (!ft_atoi_cub(str, &i, &params->color.red))
+		parsing_errors("Error: Missing color\n", params);
 	if (str[i] == ',')
 		i++;
-	if (!ft_atoi_cub(str, &i, &color->green))
-		ft_printf("Error: Missing color\n");
+	if (!ft_atoi_cub(str, &i, &params->color.green))
+		parsing_errors("Error: Missing color\n", params);
 	if (str[i] == ',')
 		i++;
-	if (!ft_atoi_cub(str, &i, &color->blue))
-		ft_printf("Error: Missing color\n");
+	if (!ft_atoi_cub(str, &i, &params->color.blue))
+		parsing_errors("Error: Missing color\n", params);
 	return (i);
 }
 
-void			check_color(t_color *color, int i, char *str)
+void			check_color(t_params *params, int i, char *str)
 {
 	while (str[i])
 	{
 		if (str[i] != '\f' || str[i] != '\t' || str[i] != '\n' ||
 			str[i] != '\r' || str[i] != '\v' || str[i] != ' ' )
-			ft_printf("Error: Color line can only contain color values or spaces\n");
+			parsing_errors("Error: Color line can only contain color values or spaces\n", params);
 		i++;
 	}
-	if (color->red < 0 || color->red > 255)
-		ft_printf("Error: red color non valid\n");
-	if (color->green < 0 || color->green > 255)
-		ft_printf("Error: green color non valid\n");
-	if (color->blue < 0 || color->blue > 255)
-		ft_printf("Error: blue color non valid\n");
+	if (params->color.red < 0 || params->color.red > 255)
+		parsing_errors("Error: red color non valid\n", params);
+	if (params->color.green < 0 || params->color.green > 255)
+		parsing_errors("Error: green color non valid\n", params);
+	if (params->color.blue < 0 || params->color.blue > 255)
+		parsing_errors("Error: blue color non valid\n", params);
 }
 
 static void		get_textures(t_textures *textures, char *str)
@@ -48,7 +48,7 @@ static void		get_textures(t_textures *textures, char *str)
 	textures->path = ft_strdup(str + i);
 }
 
-static void		check_textures(t_textures *textures)
+static void		check_textures(t_textures *textures, t_params *params)
 {
 	int i;
 	int len;
@@ -60,12 +60,12 @@ static void		check_textures(t_textures *textures)
 		if (textures->path[i] == '\f' || textures->path[i] == '\t' ||
 				textures->path[i] == '\n' ||
 				textures->path[i] == '\r' || textures->path[i] == '\v' || textures->path[i] == ' ')
-			ft_printf("Error: not a good path for texture\n");
+			parsing_errors("Error: not a good path for texture\n", params);
 		i++;
 	}
 	if (textures->path[len-4] != '.' || textures->path[len-3] != 'x'
 			|| textures->path[len-2] != 'p' || textures->path[len-1] != 'm')
-	ft_printf("Error: not a good path for texture\n");
+	parsing_errors("Error: not a good path for texture\n", params);
 }
 
 static void		get_resolution(t_params *params, char *str)
@@ -77,43 +77,50 @@ static void		get_resolution(t_params *params, char *str)
 	while (str[i] && (!(str[i] >= '0' && str[i] <= '9')) && str[i] != '-')
 	{
 		if (!(is_space(str[i++])))
-			ft_printf("Resolution must only contain height and width");
+			parsing_errors("Resolution must only contain height and width\n", params);
 	}
+	if (check_before_atoi(str,i))
+		parsing_errors("Height and width are needed to build a window\n", params);
 	ft_atoi_cub(str, &i , &params->window.resolution.x_res);
+	if (check_before_atoi(str,i))
+		parsing_errors("Height and width are needed to build a window\n", params);
 	ft_atoi_cub(str, &i , &params->window.resolution.y_res);
+	while (str[i])
+		if (!(is_space(str[i++])))
+			parsing_errors("Can't give other values than heigth and width on this line\n", params);
 	if (!(params->cam.dist_buffer = malloc(sizeof(double) * 
 	params->window.resolution.x_res)))
-		ft_printf("Can't malloc distance buffer");
+		parsing_errors("Can't malloc distance buffer\n", params);
 }
 
 static void		get_north_texture(t_params *params, char *data)
 {
 	get_textures(&params->window.north, data);
-	check_textures(&params->window.north);
+	check_textures(&params->window.north, params);
 }
 
 static void		get_south_texture(t_params *params, char *data)
 {
 	get_textures(&params->window.south, data);
-	check_textures(&params->window.south);
+	check_textures(&params->window.south, params);
 }
 
 static void		get_west_texture(t_params *params, char *data)
 {
 	get_textures(&params->window.west, data);
-	check_textures(&params->window.west);
+	check_textures(&params->window.west, params);
 }
 
 static void		get_east_texture(t_params *params, char *data)
 {
 	get_textures(&params->window.east, data);
-	check_textures(&params->window.east);
+	check_textures(&params->window.east, params);
 }
 
 static void		get_sprite_texture(t_params *params, char *data)
 {
 	get_textures(&params->sprite.textures, data);
-	check_textures(&params->sprite.textures);
+	check_textures(&params->sprite.textures, params);
 }
 
 static void		get_floor_color(t_params *params, char *data)
@@ -124,11 +131,11 @@ static void		get_floor_color(t_params *params, char *data)
 	while(data[i] && !(data[i] >= '0' && data[i] <= '9'))
 	{
 		if (data[i] != ' ')
-			ft_printf("Error: Color line can only contain color values or spaces\n");
+			parsing_errors("Error: Color line can only contain color values or spaces\n", params);
 		i++;
 	}
-	i = get_color(&params->window.floor, data);
-	check_color(&params->window.floor, i, data);
+	i = get_color(params, data);
+	check_color(params, i, data);
 }
 
 static void		get_ceiling_color(t_params *params, char *data)
@@ -139,11 +146,11 @@ static void		get_ceiling_color(t_params *params, char *data)
 	while(data[i] && !(data[i] >= '0' && data[i] <= '9'))
 	{
 		if (data[i] != ' ')
-			ft_printf("Error: Color line can only contain color values or spaces\n");
+			parsing_errors("Error: Color line can only contain color values or spaces\n", params);
 		i++;
 	}
-	i = get_color(&params->window.ceiling, data);
-	check_color(&params->window.ceiling, i, data);
+	i = get_color(params, data);
+	check_color(params, i, data);
 }
 
 static	void	get_data(t_params *params, char *data)
@@ -172,7 +179,7 @@ void				data_parsing(t_params *params)
 	int		fd;
 
 	if ((fd = open(params->mapfile, O_RDONLY)) == (-1))
-		ft_printf("Error: Can't read file\n");
+		parsing_errors("Error: Can't read file\n", params);
 	while (get_next_line(fd, &data))
 	{
 		if (is_map_line(data))

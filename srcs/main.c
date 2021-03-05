@@ -18,9 +18,9 @@ int		main(int argc, char **argv)
 	data_parsing(&params);
 	malloc_map(&params);
 	if (!(params.ptr = mlx_init()))
-		errors("fail to init mlx", &params);
+		parsing_errors("fail to init mlx", &params);
 	create_cub(&params);
 	if (argc == 3)
-		save(&params);
+		make_bmp(&params);
 	event(&params);
 }

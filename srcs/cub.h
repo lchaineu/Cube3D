@@ -181,6 +181,8 @@ void			put_sprites_text(t_params *params, int pix_pos, t_textures * text);
 void			sprites(t_params *params);
 void			set_sprites(t_params *params);
 int				is_space(char c);
+void			make_bmp(t_params *params);
+int				check_before_atoi(char *str,int i);
 
 
 

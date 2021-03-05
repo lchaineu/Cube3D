@@ -8,6 +8,15 @@ void	set_cub_val(t_params *params)
 	params->window.east.img.ptr = NULL;
 	params->window.west.img.ptr = NULL;
 	params->sprite.textures.img.ptr = NULL;
+	params->event.w = 0;
+	params->event.s = 0;
+	params->event.a = 0;
+	params->event.d = 0;
+	params->event.right_arrow = 0;
+	params->event.left_arrow = 0;
+	params->sprite.order = NULL;
+	params->sprite.tab = NULL;
+	params->sprite.dist = NULL;
 }
 
 void	init_textures(t_params *params)
@@ -73,7 +82,7 @@ void	create_cub(t_params *params)
 	get_textures(params);
 	set_sprites(params);
 	raycasting(params);
-}
+} 
 
 void	set_parsing_val(t_params *params)
 {

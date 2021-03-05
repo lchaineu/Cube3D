@@ -31,10 +31,19 @@ void	images_destroyer(t_params *params)
 	mlx_destroy_window(params->ptr, params->window.ptr);
 }
 
+void	free_variables(t_params *params)
+{
+	if (params->sprite.tab)
+		free(params->sprite.tab);
+	if (params->sprite.order)
+		free(params->sprite.order);
+	if (params->sprite.dist)
+		free(params->sprite.dist);
+}
+
 void	parsing_errors(char *error, t_params *params)
 {
-	if (params->mapfile)
-		free(params->mapfile);
+	free(params->mapfile);
 	if (params->window.north.path)
 		free(params->window.north.path);
 	if (params->window.south.path)
@@ -43,6 +52,10 @@ void	parsing_errors(char *error, t_params *params)
 		free(params->window.east.path);
 	if (params->window.west.path)
 		free(params->window.west.path);
+	if (params->sprite.textures.path)
+		free (params->sprite.textures.path);
+	if (params->cam.dist_buffer)
+		free(params->cam.dist_buffer);
 	map_destroyer(&params->map);
 	ft_printf("Error: %s\n", error);
 	exit(EXIT_FAILURE);
@@ -50,8 +63,7 @@ void	parsing_errors(char *error, t_params *params)
 
 void	errors(char *error, t_params *params)
 {
-	if (params->mapfile)
-		free(params->mapfile);
+	free(params->mapfile);
 	if (params->window.north.path)
 		free(params->window.north.path);
 	if (params->window.south.path)
@@ -60,7 +72,11 @@ void	errors(char *error, t_params *params)
 		free(params->window.east.path);
 	if (params->window.west.path)
 		free(params->window.west.path);
-	//free_variables
+	if (params->sprite.textures.path)
+		free (params->sprite.textures.path);
+	if (params->cam.dist_buffer)
+		free(params->cam.dist_buffer);
+	free_variables(params);
 	images_destroyer(params);
 	map_destroyer(&params->map);
 	ft_printf("Error: %s\n", error);
@@ -80,7 +96,7 @@ void	do_exit(t_params *params)
 	if (params->window.west.path)
 		free(params->window.west.path);
 	map_destroyer(&params->map);
-	//free_variables
+	free_variables(params);
 	images_destroyer(params);
 	exit(EXIT_SUCCESS);
 }

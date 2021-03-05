@@ -20,7 +20,7 @@ void		search_pos(t_map map, t_params *params)
 	}
 }
 
-void		save_map(t_map *map, char *mapfile)
+void		save_map(t_params *params, char *mapfile)
 {
 	int		fd;
 	int		i;
@@ -28,18 +28,18 @@ void		save_map(t_map *map, char *mapfile)
 
 	i = 0;
 	if ((fd = open(mapfile, O_RDONLY)) == (-1))
-		ft_printf("Error: Can't read file\n");
+		parsing_errors("Error: Can't read file\n", params);
 	while (get_next_line(fd, &map_data))
 	{
 		if (is_map_line(map_data) && !(is_empty_line(map_data)))
 		{
-			map->map[i] = map_data;
+			params->map.map[i] = map_data;
 			i++;
 		}
 	}
 	if (is_map_line(map_data) && !(is_empty_line(map_data)))
 	{
-		map->map[i]= map_data;
+		params->map.map[i]= map_data;
 		i++;
 	}
 	close(fd);
@@ -53,7 +53,7 @@ void		malloc_map(t_params *params)
 
 	i = 0;
 	if ((fd = open(params->mapfile, O_RDONLY)) == (-1))
-		ft_printf("Error: Can't read file\n");
+		parsing_errors("Error: Can't read file\n", params);
 	while (get_next_line(fd, &map_data))
 	{
 		if (is_map_line(map_data) && !(is_empty_line(map_data)))
@@ -67,10 +67,10 @@ void		malloc_map(t_params *params)
 	free(map_data);
 	close(fd);
 	if (!(params->map.map = (char**)malloc(sizeof(char *) * (i + 1))))
-		ft_printf("Error: can't malloc map\n");
+		parsing_errors("Error: can't malloc map\n", params);
 	params->map.map[i] = NULL;
-	save_map(&params->map, params->mapfile);
+	save_map(params, params->mapfile);
 	if (!(is_a_good_map(params->map.map)))
-		errors("Map isn't closed", params);
+		parsing_errors("Map isn't closed", params);
 	search_pos(params->map, params);
 }

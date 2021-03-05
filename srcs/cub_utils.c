@@ -21,6 +21,17 @@ int		is_char_in_str(char *str, char c)
 	return (0);
 }
 
+int		check_before_atoi(char *str,int i)
+{
+	while (str[i] && is_space(str[i]))
+		i++;
+	if (str[i] && str[i] == '-')
+		i++;
+	if (str[i] && str[i] >= '0' && str[i] <= '9')
+		return (0);
+	return (1);
+}
+
 int		ft_strcmp_cub(char *s1, char *s2)
 {
 	int i;
