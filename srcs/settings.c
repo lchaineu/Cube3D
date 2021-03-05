@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   settings.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 15:59:19 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/05 16:03:51 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	set_cub_val(t_params *params)
-{	
+{
 	params->image.ptr = NULL;
 	params->window.north.img.ptr = NULL;
 	params->window.south.img.ptr = NULL;
@@ -39,29 +51,30 @@ void	init_textures(t_params *params)
 		errors("Can't get west texture info", params);
 	if (!(params->sprite.textures.img.info = (unsigned char*)mlx_get_data_addr(
 	params->sprite.textures.img.ptr, &params->sprite.textures.img.bpp,
-	&params->sprite.textures.img.size_line, &params->sprite.textures.img.endian	)))
+	&params->sprite.textures.img.size_line,
+	&params->sprite.textures.img.endian)))
 		errors("Can't get sprites texture info", params);
 }
 
 void	get_textures(t_params *params)
 {
-	if (!(params->window.north.img.ptr = 
+	if (!(params->window.north.img.ptr =
 			mlx_xpm_file_to_image(params->ptr, params->window.north.path,
 			&params->window.north.width, &params->window.north.height)))
 		errors("Can't load north texture", params);
-	if (!(params->window.south.img.ptr = 
+	if (!(params->window.south.img.ptr =
 			mlx_xpm_file_to_image(params->ptr, params->window.south.path,
 			&params->window.south.width, &params->window.south.height)))
 		errors("Can't load south texture", params);
-	if (!(params->window.east.img.ptr = 
+	if (!(params->window.east.img.ptr =
 			mlx_xpm_file_to_image(params->ptr, params->window.east.path,
 			&params->window.east.width, &params->window.east.height)))
 		errors("Can't load east texture", params);
-	if (!(params->window.west.img.ptr = 
+	if (!(params->window.west.img.ptr =
 			mlx_xpm_file_to_image(params->ptr, params->window.west.path,
 			&params->window.west.width, &params->window.west.height)))
 		errors("Can't load west texture", params);
-	if (!(params->sprite.textures.img.ptr = 
+	if (!(params->sprite.textures.img.ptr =
 			mlx_xpm_file_to_image(params->ptr, params->sprite.textures.path,
 			&params->sprite.textures.width, &params->sprite.textures.height)))
 		errors("Can't load sprites texture", params);
@@ -72,17 +85,21 @@ void	create_cub(t_params *params)
 {
 	set_cub_val(params);
 	if (!(params->window.ptr = mlx_new_window(params->ptr,
-			params->window.resolution.x_res, params->window.resolution.y_res, "Cub3D")))
+			params->window.resolution.x_res,
+			params->window.resolution.y_res, "Cub3D")))
 		errors("Can't create window", params);
-	if (!(params->image.ptr = mlx_new_image(params->ptr, params->window.resolution.x_res,
+	if (!(params->image.ptr = mlx_new_image(params->ptr,
+			params->window.resolution.x_res,
 			params->window.resolution.y_res)))
 		errors("Can't create image", params);
-	if (!(params->image.info = (unsigned char *)mlx_get_data_addr(params->image.ptr, &params->image.bpp, &params->image.size_line, &params->image.endian)))
+	if (!(params->image.info = (unsigned char *)
+	mlx_get_data_addr(params->image.ptr, &params->image.bpp,
+	&params->image.size_line, &params->image.endian)))
 		errors("Can't get image data", params);
 	get_textures(params);
 	set_sprites(params);
 	raycasting(params);
-} 
+}
 
 void	set_parsing_val(t_params *params)
 {
@@ -101,4 +118,5 @@ void	set_parsing_val(t_params *params)
 	params->window.resolution.x_res = 0;
 	params->window.resolution.y_res = 0;
 	params->cam.dist_buffer = NULL;
+	params->save = 0;
 }

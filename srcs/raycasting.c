@@ -1,23 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 15:51:30 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/05 16:15:46 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
-static void	get_cam_values(t_params *params)
+static void		get_cam_values(t_params *params)
 {
 	params->cam.hit = 0;
-	params->cam.cam_x = 2 * params->cam.pix / 
+	params->cam.cam_x = 2 * params->cam.pix /
 				(double)params->window.resolution.x_res - 1;
-	params->cam.dir.raydirX = params->cam.dir.x + 
+	params->cam.dir.raydirx = params->cam.dir.x +
 				params->cam.plane.x * params->cam.cam_x;
-	params->cam.dir.raydirY = params->cam.dir.y + 
+	params->cam.dir.raydiry = params->cam.dir.y +
 				params->cam.plane.y * params->cam.cam_x;
 	params->map.map_pos.x = (int)params->pos.x;
 	params->map.map_pos.y = (int)params->pos.y;
-	params->cam.deltadist.x = fabs(1 / params->cam.dir.raydirX);
-	params->cam.deltadist.y = fabs(1 / params->cam.dir.raydirY);
+	params->cam.deltadist.x = fabs(1 / params->cam.dir.raydirx);
+	params->cam.deltadist.y = fabs(1 / params->cam.dir.raydiry);
 }
 
-static void	get_side_dist(t_params *params)
+static void		get_side_dist(t_params *params)
 {
-	if (params->cam.dir.raydirX < 0)
+	if (params->cam.dir.raydirx < 0)
 	{
 		params->cam.step.x = -1;
 		params->cam.sidedist.x = (params->pos.x
@@ -29,7 +41,7 @@ static void	get_side_dist(t_params *params)
 		params->cam.sidedist.x = (params->map.map_pos.x
 		+ 1.0 - params->pos.x) * params->cam.deltadist.x;
 	}
-	if (params->cam.dir.raydirY < 0)
+	if (params->cam.dir.raydiry < 0)
 	{
 		params->cam.step.y = -1;
 		params->cam.sidedist.y = (params->pos.y
@@ -43,7 +55,7 @@ static void	get_side_dist(t_params *params)
 	}
 }
 
-static void	get_hit(t_params *params)
+static void		get_hit(t_params *params)
 {
 	while (params->cam.hit == 0)
 	{
@@ -65,22 +77,22 @@ static void	get_hit(t_params *params)
 	}
 }
 
-static void	get_hit_dist(t_params *params)
+static void		get_hit_dist(t_params *params)
 {
 	if (params->cam.compass == 0)
 	{
 		params->cam.walldist = (params->map.map_pos.x - params->pos.x +
-		(1 - (int)params->cam.step.x) / 2) / params->cam.dir.raydirX;
+		(1 - (int)params->cam.step.x) / 2) / params->cam.dir.raydirx;
 	}
 	else
 	{
 		params->cam.walldist = (params->map.map_pos.y - params->pos.y +
-		(1 - (int)params->cam.step.y) / 2) / params->cam.dir.raydirY;
+		(1 - (int)params->cam.step.y) / 2) / params->cam.dir.raydiry;
 	}
 	params->cam.dist_buffer[params->cam.pix] = params->cam.walldist;
 }
 
-void	raycasting(t_params *params)
+void			raycasting(t_params *params)
 {
 	params->cam.pix = 0;
 	while (params->cam.pix < params->window.resolution.x_res)

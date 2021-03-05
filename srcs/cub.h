@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 16:12:08 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/05 16:23:20 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUBE3D_H
 # define CUBE3D_H
 
@@ -12,21 +24,21 @@
 # define ANGLE 0.1
 # define MAXDIST 0.2
 
-typedef struct s_vect
+typedef struct	s_vect
 {
 	double x;
 	double y;
 }				t_vect;
 
-typedef struct s_dir
+typedef struct	s_dir
 {
 	double		x;
 	double		y;
-	double		raydirX;
-	double		raydirY;
-}			t_dir;
+	double		raydirx;
+	double		raydiry;
+}				t_dir;
 
-typedef struct s_cam
+typedef struct	s_cam
 {
 	int		pix;
 	double	cam_x;
@@ -41,12 +53,12 @@ typedef struct s_cam
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
-	double	wallX;
+	double	wallx;
 	double	*dist_buffer;
 	int		side;
 }				t_cam;
 
-typedef struct s_image
+typedef struct	s_image
 {
 	void			*ptr;
 	unsigned char	*info;
@@ -55,13 +67,13 @@ typedef struct s_image
 	int				endian;
 }				t_image;
 
-typedef struct s_map
+typedef struct	s_map
 {
 	char	**map;
 	t_vect	map_pos;
 }				t_map;
 
-typedef struct s_color
+typedef struct	s_color
 {
 	int		red;
 	int		green;
@@ -69,18 +81,18 @@ typedef struct s_color
 
 }				t_color;
 
-typedef	struct s_textures
+typedef	struct	s_textures
 {
 	char		*path;
-	int			textX;
+	int			textx;
 	int			width;
 	int			height;
 	double		step;
-	double		textY;
+	double		texty;
 	t_image		img;
-}				t_textures;				
+}				t_textures;
 
-typedef struct s_sprites
+typedef struct	s_sprites
 {
 	t_vect		*tab;
 	int			*order;
@@ -91,22 +103,22 @@ typedef struct s_sprites
 	int			width;
 	int			stripe;
 	int			center_stripe;
-	int			startX;
-	int			startY;
-	int			endX;
-	int			endY;
+	int			startx;
+	int			starty;
+	int			endx;
+	int			endy;
 	t_textures	textures;
-	double		invDet;
-	t_vect		transform;	
+	double		inv_det;
+	t_vect		transform;
 }				t_sprites;
 
-typedef struct s_resolution
+typedef struct	s_resolution
 {
 	int			x_res;
 	int			y_res;
 }				t_resolution;
 
-typedef struct		s_event
+typedef struct	s_event
 {
 	int				w;
 	int				a;
@@ -114,9 +126,9 @@ typedef struct		s_event
 	int				d;
 	int				right_arrow;
 	int				left_arrow;
-}					t_event;
+}				t_event;
 
-typedef struct s_window
+typedef struct	s_window
 {
 	void			*ptr;
 	t_textures		north;
@@ -129,7 +141,7 @@ typedef struct s_window
 	int				res;
 }				t_window;
 
-typedef struct s_params
+typedef struct	s_params
 {
 	void		*ptr;
 	t_window	window;
@@ -177,13 +189,12 @@ void			move_right(t_params *params);
 void			point_left(t_params *params);
 void			point_right(t_params *params);
 void			get_sprites_texture(t_params *params);
-void			put_sprites_text(t_params *params, int pix_pos, t_textures * text);
+void			put_sprites_text(t_params *params, int pix_pos,
+				t_textures *text);
 void			sprites(t_params *params);
 void			set_sprites(t_params *params);
 int				is_space(char c);
 void			make_bmp(t_params *params);
-int				check_before_atoi(char *str,int i);
-
-
+int				check_before_atoi(char *str, int i);
 
 #endif

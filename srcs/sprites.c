@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sprites.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 15:58:28 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/05 16:21:14 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 int		count_sprites(t_params *params)
@@ -107,32 +119,32 @@ void	switch_sprites(t_params *params)
 
 void	calculate_more_sprites_values(t_params *params)
 {
-	params->sprite.startY = -params->sprite.height / 2 + params->window.resolution.y_res / 2;
-	if (params->sprite.startY < 0)
-		params->sprite.startY = 0;
-	params->sprite.endY = params->sprite.height / 2 + params->window.resolution.y_res / 2;
-	if (params->sprite.endY >= params->window.resolution.y_res)
-		params->sprite.endY = params->window.resolution.y_res - 1;
+	params->sprite.starty = -params->sprite.height / 2 + params->window.resolution.y_res / 2;
+	if (params->sprite.starty < 0)
+		params->sprite.starty = 0;
+	params->sprite.endy = params->sprite.height / 2 + params->window.resolution.y_res / 2;
+	if (params->sprite.endy >= params->window.resolution.y_res)
+		params->sprite.endy = params->window.resolution.y_res - 1;
 	params->sprite.width = abs((int)(params->window.resolution.y_res /
 	params->sprite.transform.y));
-	params->sprite.startX = -params->sprite.width / 2 + params->sprite.center_stripe;
-	if (params->sprite.startX < 0)
-		params->sprite.startX = 0;
-	params->sprite.endX = params->sprite.width / 2 + params->sprite.center_stripe;
-	if (params->sprite.endX >= params->window.resolution.x_res)
-		params->sprite.endX = params->window.resolution.x_res - 1;
-	params->sprite.stripe = params->sprite.startX;
+	params->sprite.startx = -params->sprite.width / 2 + params->sprite.center_stripe;
+	if (params->sprite.startx < 0)
+		params->sprite.startx = 0;
+	params->sprite.endx = params->sprite.width / 2 + params->sprite.center_stripe;
+	if (params->sprite.endx >= params->window.resolution.x_res)
+		params->sprite.endx = params->window.resolution.x_res - 1;
+	params->sprite.stripe = params->sprite.startx;
 }
 
 void	calculate_sprites_values(t_params *params, t_vect tab)
 {
 	params->sprite.coords.x = tab.x - params->pos.x;
 	params->sprite.coords.y = tab.y - params->pos.y;
-	params->sprite.invDet = 1.0 / (params->cam.plane.x * params->cam.dir.y
+	params->sprite.inv_det = 1.0 / (params->cam.plane.x * params->cam.dir.y
 	- params->cam.dir.x * params->cam.plane.y);
-	params->sprite.transform.x = params->sprite.invDet * (params->cam.dir.y
+	params->sprite.transform.x = params->sprite.inv_det * (params->cam.dir.y
 	* params->sprite.coords.x - params->cam.dir.x * params->sprite.coords.y);
-	params->sprite.transform.y = params->sprite.invDet * (-params->cam.plane.y *
+	params->sprite.transform.y = params->sprite.inv_det * (-params->cam.plane.y *
 	params->sprite.coords.x + params->cam.plane.x * params->sprite.coords.y);
 	params->sprite.center_stripe = (int)((params->window.resolution.x_res / 2) * (1
 	+ params->sprite.transform.x / params->sprite.transform.y));
@@ -147,8 +159,8 @@ void	draw_sprites_bis(t_params *params)
 	int	pix_pos;
 
 	get_sprites_texture(params);
-	y = params->sprite.startY;
-	while (y < params->sprite.endY)
+	y = params->sprite.starty;
+	while (y < params->sprite.endy)
 	{
 		pix_pos = params->sprite.stripe * params->image.bpp
 		/ 8 + params->image.size_line * y;
@@ -159,7 +171,7 @@ void	draw_sprites_bis(t_params *params)
 
 void	draw_sprites(t_params *params)
 {
-	while (params->sprite.stripe < params->sprite.endX)
+	while (params->sprite.stripe < params->sprite.endx)
 	{
 		if (params->sprite.transform.y > 0 && params->sprite.stripe > 0
 		&& params->sprite.stripe < params->window.resolution.x_res

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 16:11:51 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/05 16:12:03 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 int			is_space(char c)
@@ -21,7 +33,7 @@ int		is_char_in_str(char *str, char c)
 	return (0);
 }
 
-int		check_before_atoi(char *str,int i)
+int		check_before_atoi(char *str, int i)
 {
 	while (str[i] && is_space(str[i]))
 		i++;

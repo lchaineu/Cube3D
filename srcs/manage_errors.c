@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_errors.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 16:07:31 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/05 16:08:40 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	map_destroyer(t_map *map)
@@ -53,7 +65,7 @@ void	parsing_errors(char *error, t_params *params)
 	if (params->window.west.path)
 		free(params->window.west.path);
 	if (params->sprite.textures.path)
-		free (params->sprite.textures.path);
+		free(params->sprite.textures.path);
 	if (params->cam.dist_buffer)
 		free(params->cam.dist_buffer);
 	map_destroyer(&params->map);
@@ -73,7 +85,7 @@ void	errors(char *error, t_params *params)
 	if (params->window.west.path)
 		free(params->window.west.path);
 	if (params->sprite.textures.path)
-		free (params->sprite.textures.path);
+		free(params->sprite.textures.path);
 	if (params->cam.dist_buffer)
 		free(params->cam.dist_buffer);
 	free_variables(params);
@@ -94,7 +106,7 @@ void	do_exit(t_params *params)
 	if (params->window.east.path)
 		free(params->window.east.path);
 	if (params->window.west.path)
-		free(params->window.west.path);
+		fre(params->window.west.path);
 	map_destroyer(&params->map);
 	free_variables(params);
 	images_destroyer(params);

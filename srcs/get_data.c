@@ -1,38 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_data.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 15:52:36 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/05 15:55:55 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "cub.h"
 
-int			get_color(t_params *params, char *str)
+int			get_color(t_params *params, t_color *color, char *str)
 {
 	int i;
 
 	i = 1;
-	if (!ft_atoi_cub(str, &i, &params->color.red))
-		parsing_errors("Error: Missing color\n", params);
+	if (check_before_atoi(str, i))
+		parsing_errors("color line not conform", params);
+	ft_atoi_cub(str, &i, &color->red);
 	if (str[i] == ',')
 		i++;
-	if (!ft_atoi_cub(str, &i, &params->color.green))
-		parsing_errors("Error: Missing color\n", params);
+	if (check_before_atoi(str, i))
+		parsing_errors("color line not conform", params);	
+	ft_atoi_cub(str, &i, &color->green);
 	if (str[i] == ',')
 		i++;
-	if (!ft_atoi_cub(str, &i, &params->color.blue))
-		parsing_errors("Error: Missing color\n", params);
+	if (check_before_atoi(str, i))
+		parsing_errors("color line not conform", params);
+	ft_atoi_cub(str, &i, &color->blue);
 	return (i);
 }
 
-void			check_color(t_params *params, int i, char *str)
+void			check_color(t_params *params, t_color *color)
 {
-	while (str[i])
-	{
-		if (str[i] != '\f' || str[i] != '\t' || str[i] != '\n' ||
-			str[i] != '\r' || str[i] != '\v' || str[i] != ' ' )
-			parsing_errors("Error: Color line can only contain color values or spaces\n", params);
-		i++;
-	}
-	if (params->color.red < 0 || params->color.red > 255)
-		parsing_errors("Error: red color non valid\n", params);
-	if (params->color.green < 0 || params->color.green > 255)
-		parsing_errors("Error: green color non valid\n", params);
-	if (params->color.blue < 0 || params->color.blue > 255)
-		parsing_errors("Error: blue color non valid\n", params);
+	if (color->red < 0 || color->red > 255)
+		parsing_errors("red color non valid", params);
+	if (color->green < 0 || color->green > 255)
+		parsing_errors("green color non valid", params);
+	if (color->blue < 0 || color->blue > 255)
+		parsing_errors("blue color non valid", params);
 }
 
 static void		get_textures(t_textures *textures, char *str)
@@ -60,12 +68,30 @@ static void		check_textures(t_textures *textures, t_params *params)
 		if (textures->path[i] == '\f' || textures->path[i] == '\t' ||
 				textures->path[i] == '\n' ||
 				textures->path[i] == '\r' || textures->path[i] == '\v' || textures->path[i] == ' ')
-			parsing_errors("Error: not a good path for texture\n", params);
+			parsing_errors("not a good path for texture", params);
 		i++;
 	}
 	if (textures->path[len-4] != '.' || textures->path[len-3] != 'x'
 			|| textures->path[len-2] != 'p' || textures->path[len-1] != 'm')
-	parsing_errors("Error: not a good path for texture\n", params);
+	parsing_errors("not a good path for texture", params);
+}
+
+void			check_resolution(t_params *params)
+{
+	int x;
+	int y;
+
+	if (!(params->window.res))
+		parsing_errors("Missing line resolution", params);
+	mlx_get_screen_size(params->ptr, &x, &y);
+	if (params->window.resolution.x_res < 1)
+		parsing_errors("Window width can't be negative", params);
+	if (params->window.resolution.y_res < 1)
+		parsing_errors("Window height can't be negative", params);
+	if (params->window.resolution.x_res > x)
+		params->window.resolution.x_res = x;
+	if (params->window.resolution.y_res > y)
+		params->window.resolution.y_res = y;
 }
 
 static void		get_resolution(t_params *params, char *str)
@@ -77,20 +103,21 @@ static void		get_resolution(t_params *params, char *str)
 	while (str[i] && (!(str[i] >= '0' && str[i] <= '9')) && str[i] != '-')
 	{
 		if (!(is_space(str[i++])))
-			parsing_errors("Resolution must only contain height and width\n", params);
+			parsing_errors("Resolution must only contain height and width", params);
 	}
 	if (check_before_atoi(str,i))
-		parsing_errors("Height and width are needed to build a window\n", params);
+		parsing_errors("Height and width are needed to build a window", params);
 	ft_atoi_cub(str, &i , &params->window.resolution.x_res);
 	if (check_before_atoi(str,i))
-		parsing_errors("Height and width are needed to build a window\n", params);
+		parsing_errors("Height and width are needed to build a window", params);
 	ft_atoi_cub(str, &i , &params->window.resolution.y_res);
 	while (str[i])
 		if (!(is_space(str[i++])))
-			parsing_errors("Can't give other values than heigth and width on this line\n", params);
+			parsing_errors("Can't give other values than heigth and width on this line", params);
 	if (!(params->cam.dist_buffer = malloc(sizeof(double) * 
 	params->window.resolution.x_res)))
-		parsing_errors("Can't malloc distance buffer\n", params);
+		parsing_errors("Can't malloc distance buffer", params);
+	check_resolution(params);
 }
 
 static void		get_north_texture(t_params *params, char *data)
@@ -125,32 +152,14 @@ static void		get_sprite_texture(t_params *params, char *data)
 
 static void		get_floor_color(t_params *params, char *data)
 {
-	int i;
-
-	i = 1;
-	while(data[i] && !(data[i] >= '0' && data[i] <= '9'))
-	{
-		if (data[i] != ' ')
-			parsing_errors("Error: Color line can only contain color values or spaces\n", params);
-		i++;
-	}
-	i = get_color(params, data);
-	check_color(params, i, data);
+	get_color(params, &params->window.floor, data);
+	check_color(params, &params->window.floor);
 }
 
 static void		get_ceiling_color(t_params *params, char *data)
 {
-	int i;
-
-	i = 1;
-	while(data[i] && !(data[i] >= '0' && data[i] <= '9'))
-	{
-		if (data[i] != ' ')
-			parsing_errors("Error: Color line can only contain color values or spaces\n", params);
-		i++;
-	}
-	i = get_color(params, data);
-	check_color(params, i, data);
+	get_color(params, &params->window.ceiling, data);
+	check_color(params, &params->window.ceiling);
 }
 
 static	void	get_data(t_params *params, char *data)
@@ -179,7 +188,7 @@ void				data_parsing(t_params *params)
 	int		fd;
 
 	if ((fd = open(params->mapfile, O_RDONLY)) == (-1))
-		parsing_errors("Error: Can't read file\n", params);
+		parsing_errors("Can't read file", params);
 	while (get_next_line(fd, &data))
 	{
 		if (is_map_line(data))

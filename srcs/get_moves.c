@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_moves.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 16:06:26 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/05 16:07:13 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 int		associate_event(t_params *params)
@@ -55,4 +67,3 @@ void	event(t_params *params)
 	mlx_loop_hook(params->ptr, associate_event, params);
 	mlx_loop(params->ptr);
 }
- 
