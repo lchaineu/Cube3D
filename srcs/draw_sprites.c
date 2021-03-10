@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprites2.c                                         :+:      :+:    :+:   */
+/*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/05 15:58:33 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/05 16:19:50 by lchaineu         ###   ########.fr       */
+/*   Created: 2021/03/08 12:40:00 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/08 13:22:11 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	get_sprites_texture(t_params *params)
-{
-	params->sprite.textures.textx = (int)((params->sprite.stripe +
-	(double)params->sprite.width / 2 -
-	(double)params->sprite.center_stripe) * (double)params->sprite.textures.width /
-	(double)params->sprite.width);
-	params->sprite.textures.step = 1.0 * params->sprite.textures.height /
-	params->sprite.height;
-	params->sprite.textures.texty = ((double)params->sprite.starty -
-	(double)params->window.resolution.y_res / 2 + (double)params->sprite.height / 2)
-	* params->sprite.textures.step;
-	params->sprite.textures.texty-= params->sprite.textures.step;
-}
-
-void	put_sprites_text(t_params *params, int pix_pos, t_textures * text)
+void	put_sprites_text(t_params *params, int pix_pos, t_textures *text)
 {
 	int				pix_pos_text;
 	unsigned int	color;
@@ -45,5 +31,34 @@ void	put_sprites_text(t_params *params, int pix_pos, t_textures * text)
 		text->img.info[pix_pos_text + 1];
 		params->image.info[pix_pos + 2] =
 		text->img.info[pix_pos_text + 2];
+	}
+}
+
+void	draw_sprites_bis(t_params *params)
+{
+	int	y;
+	int	pix_pos;
+
+	get_sprites_texture(params);
+	y = params->sprite.starty;
+	while (y < params->sprite.endy)
+	{
+		pix_pos = params->sprite.stripe * params->image.bpp
+		/ 8 + params->image.size_line * y;
+		put_sprites_text(params, pix_pos, &params->sprite.textures);
+		y++;
+	}
+}
+
+void	draw_sprites(t_params *params)
+{
+	while (params->sprite.stripe < params->sprite.endx)
+	{
+		if (params->sprite.transform.y > 0 && params->sprite.stripe > 0
+		&& params->sprite.stripe < params->window.resolution.x_res
+		&& params->sprite.transform.y <
+		params->cam.dist_buffer[params->sprite.stripe])
+			draw_sprites_bis(params);
+		params->sprite.stripe++;
 	}
 }

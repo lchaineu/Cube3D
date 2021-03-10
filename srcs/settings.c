@@ -6,7 +6,7 @@
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 15:59:19 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/05 16:03:51 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/03/10 13:22:21 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,5 @@ void	set_parsing_val(t_params *params)
 	params->window.resolution.y_res = 0;
 	params->cam.dist_buffer = NULL;
 	params->save = 0;
+	params->starting_point = 0;
 }

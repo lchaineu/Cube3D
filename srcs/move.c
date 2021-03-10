@@ -6,7 +6,7 @@
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 16:08:45 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/05 16:10:20 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/03/08 12:47:06 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	move_forward(t_params *params)
 
 void	move_backward(t_params *params)
 {
-	if (params->map.map[(int)params->pos.y][(int)(params->pos.x - 
+	if (params->map.map[(int)params->pos.y][(int)(params->pos.x -
 	params->cam.dir.x * SPEED - (params->cam.dir.x > 0
 	? MAXDIST : -MAXDIST))] != '1')
 		params->pos.x -= params->cam.dir.x * SPEED;
@@ -55,7 +55,7 @@ void	move_left(t_params *params)
 }
 
 void	move_right(t_params *params)
-
+{
 	if (params->map.map[(int)params->pos.y][(int)(params->pos.x -
 	params->cam.dir.y * SPEED - (params->cam.dir.y > 0
 	? MAXDIST : -MAXDIST))] != '1')

@@ -6,42 +6,11 @@
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 16:07:31 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/05 16:08:40 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/03/10 12:51:49 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-void	map_destroyer(t_map *map)
-{
-	int i;
-
-	i = 0;
-	if (map->map)
-	{
-		while (map->map[i])
-		{
-			free(map->map[i]);
-			i++;
-		}
-		free(map->map);
-	}
-}
-
-void	images_destroyer(t_params *params)
-{
-	if (params->image.ptr)
-		mlx_destroy_image(params->ptr, params->image.ptr);
-	if (params->window.north.img.ptr)
-		mlx_destroy_image(params->ptr, params->window.north.img.ptr);
-	if (params->window.south.img.ptr)
-		mlx_destroy_image(params->ptr, params->window.south.img.ptr);
-	if (params->window.east.img.ptr)
-		mlx_destroy_image(params->ptr, params->window.east.img.ptr);
-	if (params->window.west.img.ptr)
-		mlx_destroy_image(params->ptr, params->window.west.img.ptr);
-	mlx_destroy_window(params->ptr, params->window.ptr);
-}
 
 void	free_variables(t_params *params)
 {
@@ -69,7 +38,7 @@ void	parsing_errors(char *error, t_params *params)
 	if (params->cam.dist_buffer)
 		free(params->cam.dist_buffer);
 	map_destroyer(&params->map);
-	ft_printf("Error: %s\n", error);
+	ft_printf("Error:\n%s\n", error);
 	exit(EXIT_FAILURE);
 }
 
@@ -106,7 +75,7 @@ void	do_exit(t_params *params)
 	if (params->window.east.path)
 		free(params->window.east.path);
 	if (params->window.west.path)
-		fre(params->window.west.path);
+		free(params->window.west.path);
 	map_destroyer(&params->map);
 	free_variables(params);
 	images_destroyer(params);

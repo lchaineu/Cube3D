@@ -5,33 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/05 15:55:58 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/05 16:05:58 by lchaineu         ###   ########.fr       */
+/*   Created: 2021/03/10 13:32:18 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/10 14:23:08 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-void		search_pos(t_map map, t_params *params)
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (map.map[y] != NULL)
-	{
-		x = 0;
-		while (map.map[y][x])
-		{
-			if (search_string(map.map[y][x], "NSEW"))
-			{
-				get_pos(params, x, y, map.map[y][x]);
-			}
-			x++;
-		}
-		y++;
-	}
-}
 
 void		save_map(t_params *params, char *mapfile)
 {
@@ -40,25 +19,24 @@ void		save_map(t_params *params, char *mapfile)
 	char	*map_data;
 
 	i = 0;
+	map_data = NULL;
 	if ((fd = open(mapfile, O_RDONLY)) == (-1))
 		parsing_errors("Can't read file", params);
-	while (get_next_line(fd, &map_data))
-	{
-		if (is_map_line(map_data) && !(is_empty_line(map_data)))
-		{
-			params->map.map[i] = map_data;
-			i++;
-		}
-	}
-	if (is_map_line(map_data) && !(is_empty_line(map_data)))
-	{
-		params->map.map[i] = map_data;
-		i++;
-	}
+	keep_saving_or_not(params, &map_data, &i, fd);
+	check_invalid_char(params, map_data);
 	close(fd);
 }
 
-void		malloc_map(t_params *params)
+void		parse_map(t_params *params)
+{
+	if (!(is_a_good_map(params)))
+		parsing_errors("Map isn't closed or is not valid", params);
+	search_pos(params->map, params);
+	if (params->starting_point == 0)
+		parsing_errors("You must add a starting point to your map", params);
+}
+
+void		get_map(t_params *params)
 {
 	int		fd;
 	int		i;
@@ -71,17 +49,18 @@ void		malloc_map(t_params *params)
 	{
 		if (is_map_line(map_data) && !(is_empty_line(map_data)))
 			i++;
+		if (!(is_map_line(map_data)) && i)
+		{
+			finish_reading(params);
+			break ;
+		}
 		free(map_data);
 	}
 	if (is_map_line(map_data) && !(is_empty_line(map_data)))
-			i++;
+		i++;
 	free(map_data);
 	close(fd);
-	if (!(params->map.map = (char**)malloc(sizeof(char *) * (i + 1))))
-		parsing_errors("Can't malloc map", params);
-	params->map.map[i] = NULL;
+	malloc_map(params, i);
 	save_map(params, params->mapfile);
-	if (!(is_a_good_map(params->map.map)))
-		parsing_errors("Map isn't closed or is not valid", params);
-	search_pos(params->map, params);
+	parse_map(params);
 }

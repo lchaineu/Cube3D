@@ -1,43 +1,78 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_map2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 13:31:25 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/10 13:34:48 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
-int		is_map_closed(int y, int x, char **map)
+void	search_pos(t_map map, t_params *params)
 {
-	
+	int		x;
+	int		y;
+
+	y = 0;
+	while (map.map[y] != NULL)
+	{
+		x = 0;
+		while (map.map[y][x])
+		{
+			if (search_string(map.map[y][x], "NSEW"))
+			{
+				get_pos(params, x, y, map.map[y][x]);
+				params->starting_point = 1;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+int		is_map_closed(int x, int y, t_params *params)
+{
 	if (x == 0 || y == 0)
 		return (0);
-	if (map[y + 1] == NULL)
+	if (params->map.map[y + 1] == NULL)
 		return (0);
-	if (map[y][(ft_strlen(map[y]) - 1)] != '1')
+	if (params->map.map[y][(ft_strlen(params->map.map[y]) - 1)] != '1')
 		return (0);
-	if ((ft_strlen(map[y - 1]) - 1) < x)
+	if ((ft_strlen(params->map.map[y - 1]) - 1) < x)
 		return (0);
-	if ((ft_strlen(map[y + 1]) - 1) < x)
+	if ((ft_strlen(params->map.map[y + 1]) - 1) < x)
 		return (0);
-	if (!(is_char_in_str("012NSEW", map[y - 1][x])))
+	if (!(is_char_in_str("012NSEW", params->map.map[y - 1][x])))
 		return (0);
-	if (!(is_char_in_str("012NSEW", map[y + 1][x])))
+	if (!(is_char_in_str("012NSEW", params->map.map[y + 1][x])))
 		return (0);
-	if (!(is_char_in_str("012NSEW", map[y][x - 1])))
+	if (!(is_char_in_str("012NSEW", params->map.map[y][x - 1])))
 		return (0);
-	if (!(is_char_in_str("012NSEW", map[y][x + 1])))
+	if (!(is_char_in_str("012NSEW", params->map.map[y][x + 1])))
 		return (0);
 	return (1);
 }
 
-int		is_a_good_map(char **map)
+int		is_a_good_map(t_params *params)
 {
 	int x;
 	int y;
 
 	y = 0;
-	while (map[y] != NULL)
+	while (params->map.map[y] != NULL)
 	{
 		x = 0;
-		while (map[y][x])
+		while (params->map.map[y][x])
 		{
-			if (is_char_in_str("02NSEW", map[y][x]))
-				if (!(is_map_closed(y, x, map)))
+			if (is_char_in_str("02NSEW", params->map.map[y][x]))
+			{
+				if (!(is_map_closed(x, y, params)))
 					return (0);
+			}
 			x++;
 		}
 		y++;

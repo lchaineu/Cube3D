@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   save_img.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/08 12:39:31 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/08 12:43:18 by lchaineu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 static void		set_value_bmp(unsigned char *string, int i)
@@ -34,7 +46,8 @@ static int		rgb_data(t_params *params, int x, int y)
 	int		color;
 
 	color = *(int*)(params->image.info
-			+ (4 * params->window.resolution.x_res * (params->window.resolution.y_res - 1 - y))
+			+ (4 * params->window.resolution.x_res *
+			(params->window.resolution.y_res - 1 - y))
 			+ (4 * x));
 	rgb = (color & 0xFF0000) | (color & 0x00FF00) | (color & 0x0000FF);
 	return (rgb);
@@ -70,7 +83,8 @@ void			make_bmp(t_params *params)
 	int		i;
 
 	i = (4 - (params->window.resolution.x_res * 3) % 4) % 4;
-	size = 54 + (3 * (params->window.resolution.x_res + i) * params->window.resolution.y_res);
+	size = 54 + (3 * (params->window.resolution.x_res + i) *
+	params->window.resolution.y_res);
 	if ((fd = open("screenshot.bmp", O_WRONLY | O_CREAT
 		| O_TRUNC | O_APPEND, 0666)) < 0)
 		return (errors("fail open bmp fd", params));

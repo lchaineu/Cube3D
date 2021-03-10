@@ -6,7 +6,7 @@
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 16:12:08 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/05 16:23:20 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/03/10 14:25:41 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct	s_params
 	t_sprites	sprite;
 	t_color		color;
 	t_event		event;
+	int			starting_point;
 }				t_params;
 
 int				set_cub(t_params *params);
@@ -165,7 +166,7 @@ int				is_char_in_str(char *str, char c);
 int				ft_atoi_cub(char *str, int *i, int *rep);
 int				is_map_line(char *str);
 int				is_empty_line(char *str);
-void			malloc_map(t_params *params);
+void			get_map(t_params *params);
 void			search_pos(t_map map, t_params *params);
 void			errors(char *error, t_params *params);
 void			set_parsing_val(t_params *params);
@@ -177,7 +178,7 @@ void			draw(t_params *params);
 void			pix_color(t_params *params, int pix_pos, t_color color);
 void			draw_wall(t_params *params);
 void			raycasting(t_params *params);
-int				is_a_good_map(char **map);
+int				is_a_good_map(t_params *params);
 void			event(t_params *params);
 void			images_destroyer(t_params *params);
 void			do_exit(t_params *params);
@@ -196,5 +197,24 @@ void			set_sprites(t_params *params);
 int				is_space(char c);
 void			make_bmp(t_params *params);
 int				check_before_atoi(char *str, int i);
+void			draw_sprites(t_params *params);
+void			draw_sprites_bis(t_params *params);
+void			calculate_more_sprites_values(t_params *params);
+void			calculate_sprites_values(t_params *params, t_vect tab);
+void			get_sprites_texture(t_params *params);
+void			switch_sprites(t_params *params);
+void			check_color(t_params *params, t_color *color);
+void			check_textures(t_textures *textures, t_params *params);
+void			check_resolution(t_params *params);
+void			get_data(t_params *params, char *data);
+void			map_destroyer(t_map *map);
+void			images_destroyer(t_params *params);
+void			put_text_color(t_params *params, int pix_pos,
+				t_textures *texture);
+void			check_invalid_char(t_params *params, char *str);
+void			finish_reading(t_params *params);
+void			malloc_map(t_params *params, int i);
+void			keep_saving_or_not(t_params *params,
+				char **map_data, int *i, int fd);
 
 #endif
