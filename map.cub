@@ -1,4 +1,4 @@
-R 1550 800
+R 1920 1080
 
 NO ./Textures/greystone.xpm
 SO ./Textures/greystone.xpm
@@ -8,7 +8,6 @@ EA ./Textures/wood.xpm
 S ./Textures/barrel.xpm
 F 250,0,0
 C 17,220,0    
-
 
 11111111
 10000001

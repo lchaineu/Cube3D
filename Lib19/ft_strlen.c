@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lanachaineux <lanachaineux@student.42.f    +#+  +:+       +#+        */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/06 09:35:23 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/01/18 13:38:24 by lanachaineu      ###   ########.fr       */
+/*   Created: 2021/03/26 16:32:24 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/26 16:32:27 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

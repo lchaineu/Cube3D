@@ -1,4 +1,4 @@
-NAME			= cube_3d
+NAME			= cub3D
 
 SRCS_LIST	   = \
 					main.c \

@@ -6,12 +6,12 @@
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 16:12:08 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/10 14:25:41 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/03/26 16:28:58 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_H
-# define CUBE3D_H
+#ifndef CUB_H
+# define CUB_H
 
 # include <math.h>
 # include <fcntl.h>

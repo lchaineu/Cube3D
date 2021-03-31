@@ -6,19 +6,11 @@
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 16:07:17 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/10 13:50:11 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/03/26 16:27:37 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-/*int		set_cub(t_params *params)
-{
-	if(!(params->mapfile = (char*)malloc(sizeof(char))))
-		return (-1);
-	params->mapfile[0] = '\0';
-	return (1);
-}*/
 
 int		main(int argc, char **argv)
 {

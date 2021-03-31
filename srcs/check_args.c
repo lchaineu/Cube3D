@@ -6,7 +6,7 @@
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 15:54:18 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/05 16:04:52 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/03/27 11:48:50 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@ static	void	is_dotcub(char *str, t_params *params)
 
 	len = (int)ft_strlen(str);
 	if (len < 5)
-		parsing_errors("Not a valid filename", params);
+	{
+		ft_printf("Error:\nNot a valid filename");
+		exit(EXIT_FAILURE);
+	}
 	if (str[len - 4] != '.' || str[len - 3] != 'c'
 	|| str[len - 2] != 'u' || str[len - 1] != 'b')
-		parsing_errors("Not a valid filename", params);
+	{
+		ft_printf("Error:\nNot a valid filename");
+		exit(EXIT_FAILURE);
+	}
 	if (!(params->mapfile = ft_strdup(str)))
 		parsing_errors("Can't malloc filename", params);
 }
@@ -29,7 +35,10 @@ static	void	is_dotcub(char *str, t_params *params)
 static	void	is_save(char *str, t_params *params)
 {
 	if (!(ft_strcmp_cub(str, "--save")))
-		parsing_errors("second argument not a save argument", params);
+	{
+		ft_printf("Error:\nSecond argument should be --save");
+		exit(EXIT_FAILURE);
+	}
 	else
 	{
 		params->save = 1;
@@ -40,7 +49,10 @@ void			check_args(int argc, char **argv, t_params *params)
 {
 	(void)params;
 	if (argc == 1)
-		parsing_errors("Error: Too few arguments", params);
+	{
+		ft_printf("Error: Too few arguments");
+		exit(EXIT_FAILURE);
+	}
 	if (argc == 2)
 		is_dotcub(argv[1], params);
 	if (argc == 3)
@@ -49,5 +61,8 @@ void			check_args(int argc, char **argv, t_params *params)
 		is_save(argv[2], params);
 	}
 	if (argc > 3)
-		parsing_errors("Error: Too many arguments", params);
+	{
+		ft_printf("Error: Too many arguments");
+		exit(EXIT_FAILURE);
+	}
 }

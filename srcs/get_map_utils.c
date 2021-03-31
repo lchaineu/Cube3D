@@ -6,7 +6,7 @@
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 13:57:16 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/10 14:25:19 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/03/26 16:19:18 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		malloc_map(t_params *params, int i)
 	params->map.map[i] = NULL;
 }
 
-void		keep_saving_or_not(t_params *params, 
+void		keep_saving_or_not(t_params *params,
 			char **map_data, int *i, int fd)
 {
 	while (get_next_line(fd, map_data))

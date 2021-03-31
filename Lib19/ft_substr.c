@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lanachaineux <lanachaineux@student.42.f    +#+  +:+       +#+        */
+/*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 14:44:55 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/01/19 17:00:23 by lanachaineu      ###   ########.fr       */
+/*   Created: 2021/03/26 16:32:11 by lchaineu          #+#    #+#             */
+/*   Updated: 2021/03/26 16:32:20 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

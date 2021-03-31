@@ -6,7 +6,7 @@
 /*   By: lchaineu <lchaineu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 16:07:31 by lchaineu          #+#    #+#             */
-/*   Updated: 2021/03/10 12:51:49 by lchaineu         ###   ########.fr       */
+/*   Updated: 2021/03/27 11:41:09 by lchaineu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	free_variables(t_params *params)
 
 void	parsing_errors(char *error, t_params *params)
 {
-	free(params->mapfile);
+	if (params->mapfile)
+		free(params->mapfile);
 	if (params->window.north.path)
 		free(params->window.north.path);
 	if (params->window.south.path)
